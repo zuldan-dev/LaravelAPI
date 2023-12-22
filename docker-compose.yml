@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+    db:
+        image: mysql:latest
+        container_name: laravel-api-db
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            MYSQL_DATABASE: larapi
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./logs/mysql:/var/log/mysql
+            - ./mysql-data:/var/lib/mysql
+        networks:
+            - laravel-api
+    php:
+        build:
+            context: docker/php
+        container_name: laravel-api-php
+        volumes:
+            - ./www/laravel-api:/www
+            - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
+        networks:
+            - laravel-api
+        depends_on:
+            - db
+
+    nginx:
+        image: nginx:latest
+        container_name: laravel-api-nginx
+        working_dir: /www
+        ports:
+            - "8000:80"
+            - "443:443"
+        volumes:
+            - ./www/laravel-api:/www
+            - ./docker/nginx:/etc/nginx/conf.d
+            - ./logs/nginx:/var/log/nginx
+        networks:
+            - laravel-api
+        depends_on:
+            - php
+
+networks:
+    laravel-api:
+        driver: bridge
