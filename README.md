@@ -1,7 +1,8 @@
 # Description 
-
+Demo Laravel project with creating/updating/deleting/viewing data through the API.
 ## Requirements
-
+1. Git
+2. Docker
 ## Installation
 - `git clone https://github.com/zuldan-dev/LaravelAPI.git`
 - `cd www/laravel-api`
