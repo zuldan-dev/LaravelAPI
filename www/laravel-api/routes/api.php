@@ -36,6 +36,9 @@ Route::middleware('auth:sanctum')
     ->put('/tasks/{id}', [ApiTaskController::class, 'update'])
     ->name('update');
 Route::middleware('auth:sanctum')
+    ->put('/tasks/{id}/complete', [ApiTaskController::class, 'complete'])
+    ->name('complete');
+Route::middleware('auth:sanctum')
     ->delete('/tasks/{id}', [ApiTaskController::class, 'delete'])
     ->name('delete');
 Route::middleware('auth:sanctum')
