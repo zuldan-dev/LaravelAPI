@@ -80,8 +80,9 @@ class ApiTaskController extends Controller
     public function show(int $id, Request $request): JsonResponse
     {
         $task = Task::where(['user_id' => $request->user()->id])->find($id);
+        $status = empty($task) ? Response::HTTP_NOT_FOUND : Response::HTTP_OK;
 
-        return response()->json(['tasks' => $task]);
+        return response()->json(['tasks' => $task], $status);
     }
 
     /**
